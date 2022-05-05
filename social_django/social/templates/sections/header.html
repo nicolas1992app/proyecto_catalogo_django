@@ -1,0 +1,35 @@
+<!-- ======= Header ======= -->
+<header id="header" class="d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="col-lg-8">
+            <h1 class="logo"><a href={% url 'inicio'%}>Django<span>.</span></a></h1>
+        </div>
+        <div class="col-md-4">
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="{% url 'inicio' %}">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="#team">Nuestro equipo</a></li>
+                    <li class="dropdown"><a href="#"><span>Usuario</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            {% if request.user.is_authenticated %}
+                                <li><a href="#perfil">Perfil</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                                <li>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                       data-bs-whatever="@mdo">Login
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            <li><a href="#registro">Registrar Usuario</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+        </div>
+
+    </div>
+</header><!-- End Header -->

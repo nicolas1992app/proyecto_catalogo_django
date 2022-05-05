@@ -1,0 +1,33 @@
+{% load static %}
+<!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Cátalogo de páginas</h2>
+            <h3>mire <span>Portfolio</span></h3>
+            <p></p>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            {% for catalogo in data %}
+            <div class="col-lg-4 col-md-3 portfolio-item filter-app">
+                <img src="{{ catalogo.ruta_foto.url}}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                    <h3>{{ catalogo.nombre }}</h3>
+                    <p>{{ catalogo.descripcion }}</p>
+                    <a href="{{ catalogo.ruta_foto.url}}" data-gallery="portfolioGallery"
+                       class="portfolio-lightbox preview-link" title={{ catalogo.descripcion}}>
+                        <i class="bx bx-plus"></i></a>
+                    <a href="{{ catalogo.enlace}}" class="details-link" title="More Details" target="_blank">
+                        <i class="bx bx-link"></i>
+
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section><!-- End Portfolio Section -->
+
+
+
