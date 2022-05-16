@@ -18,6 +18,8 @@
     <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/notifications/css/toastr/toastr.css' %}" rel="stylesheet">
+     <link href="{% static 'assets/vendor/notifications/css/sweetalert2/sweetalert2.bundle.css' %}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
@@ -32,13 +34,12 @@
 {% for message in messages %}
     <div class="alert {{ message.tags }}  alert-dismissible fade show" role="alert">
         <strong>{{ message }}</strong>
-        {% if message.level == 40 %} Usuario o contraseña incorrectos!
-        {% elif message.level == 25%} Bienvenido
+        {% if message.level == 40 %} Error!
+        {% elif message.level == 25%}
         {% endif %}.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {% endfor %}
-
 
 
 {% include "sections/catalogo.html"  with data=data %}
@@ -47,21 +48,24 @@
 {% if request.user.is_authenticated %}
     {% include "sections/perfil.html" with usuario=usuario %}
 {% endif %}
-{% include "sections/register.html" %}
+{% include "sections/register.html" with data=data%}
 {% include "sections/footer.html" %}
+{% include 'base/_modal_confirmar_eliminar.html' with objeto='catalog' %}
 
-<footer class="row" style="color: white; width: 100%; height: 2vh; position: absolute; bottom: 0; left: 0; margin: 0">
-    <div>Blog: http://blog.epicalsoft.com/</div>
-</footer>
 
 <div id="preloader"></div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
+<div class="modal fade" id="_crearEditarUsuarios" tabindex="-1" aria-labelledby="editar" aria-hidden="true"></div>
+
+
 <!-- Vendor JS Files -->
 <script src="{% static 'assets/vendor/purecounter/purecounter.js' %}"></script>
 <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
 <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/notifications/js/sweetalert2/sweetalert2.bundle.js' %}"></script>
+<script src="{% static 'assets/vendor/notifications/js/toastr/toastr.js' %}"></script>
 <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
 <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
 <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
@@ -73,11 +77,11 @@
 <!-- Template Main JS File -->
 <script src="{% static 'assets/js/main.js' %}"></script>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Iniciar Sesión</h5>
+                <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action= "{% url 'login'%}">
@@ -89,7 +93,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Contraseña:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="password">
+                        <input type="password" class="form-control" id="recipient-password" name="password">
                     </div>
 
                 </div>

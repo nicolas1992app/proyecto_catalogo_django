@@ -5,29 +5,47 @@
         <div class="section-title">
             <h2>Cátalogo de páginas</h2>
             <h3>mire <span>Portfolio</span></h3>
-            <p></p>
+            <br>
+            {% if perms.social.add_pagesinfo %}
+                <a id="crear_{{ catalogo.id }}"
+                   href="javascript:abrirModalCrearCatalogo('{% url 'register_catalog' %}')"
+                   title="Registrar">
+                    <span class="bi bi-plus-circle fw-300"></span>
+                </a>
+            {% endif %}
+            <br>
         </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200" id="catalogoCont">
             {% for catalogo in data %}
-            <div class="col-lg-4 col-md-3 portfolio-item filter-app">
-                <img src="{{ catalogo.ruta_foto.url}}" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                    <h3>{{ catalogo.nombre }}</h3>
-                    <p>{{ catalogo.descripcion }}</p>
-                    <a href="{{ catalogo.ruta_foto.url}}" data-gallery="portfolioGallery"
-                       class="portfolio-lightbox preview-link" title={{ catalogo.descripcion}}>
-                        <i class="bx bx-plus"></i></a>
-                    <a href="{{ catalogo.enlace}}" class="details-link" title="More Details" target="_blank">
-                        <i class="bx bx-link"></i>
-
-                    </a>
-                </div>
-            </div>
+                {% if catalogo.estado_pagina%}
+                    <div class="col-lg-4 col-md-3 portfolio-item filter-app">
+                        <img src="{{ catalogo.ruta_foto.url }}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h3>{{ catalogo.nombre }}</h3>
+                            <p>{{ catalogo.descripcion }}</p>
+                            <a href="{{ catalogo.ruta_foto.url }}" data-gallery="portfolioGallery"
+                               class="portfolio-lightbox preview-link" title={{ catalogo.descripcion }}>
+                                <i class="bx bx-plus"></i></a>
+                            <a href="{{ catalogo.enlace }}" class="details-link" title="More Details"
+                               target="_blank">
+                                <i class="bx bx-link"></i>
+                            </a>
+                            {% if perms.social.add_pagesinfo %}
+                                <a id="editar_{{ catalogo.id }}" href="javascript:abrirModalCrearCatalogo('{% url 'editar_catalog' catalogo.id%}')" data-original-title="Editar">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            {% endif %}
+                            {% if perms.social.delete_pagesinfo %}
+                                <a id="eliminar_{{ catalogo.id }}" href="javascript:void(0);"  onclick="fConfirmarEliminar({{ catalogo.id }}, true)" data-original-title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
 </section><!-- End Portfolio Section -->
 
-
-
+<div class="modal fade" id="_crearEditar" tabindex="-1" aria-labelledby="editar" aria-hidden="true"></div>
